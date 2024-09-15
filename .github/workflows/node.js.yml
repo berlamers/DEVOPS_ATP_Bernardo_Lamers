@@ -1,3 +1,4 @@
+
 name: CI
 
 on:
@@ -19,16 +20,32 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '16'  # Substitua pela versão do Node.js que você usa
+        node-version: '18'  # Atualize para a versão LTS mais recente, se necessário
+
+    - name: Cache Node modules
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.npm
+          node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
 
     - name: Install dependencies
-      run: |
-        npm install  # ou `yarn install` se usar Yarn
+      run: npm install  # ou `yarn install` se usar Yarn
+
+    - name: Run linters
+      run: npm run lint  # Adicione este comando se você tiver um script de linting no package.json
 
     - name: Run tests
-      run: |
-        npm test -- --watchAll=false  # ou `yarn test --watchAll=false` se usar Yarn
+      run: npm test -- --watchAll=false --ci --reporters=default  # ou `yarn test --watchAll=false --ci --reporters=default` se usar Yarn
 
     - name: Build
-      run: |
-        npm run build  # ou `yarn build` se usar Yarn
+      run: npm run build  # ou `yarn build` se usar Yarn
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: build
+        path: ./build  # Ajuste o caminho se necessário
