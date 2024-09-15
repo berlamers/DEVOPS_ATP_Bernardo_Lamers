@@ -1,0 +1,62 @@
+body {
+    background-color: orange; 
+    color: darkblue; 
+    font-family: Arial, sans-serif; 
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  div {
+    text-align: center;
+    background-color: rgb(216, 106, 3); 
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 0px rgba(0, 0, 0, 0.1); 
+  }
+  
+  body::before {
+    content: '🍊'; 
+    font-size: 10rem; 
+    position: absolute;
+    top: 10%;
+    right: 5%;
+    color: rgba(255, 165, 0, 0.5); 
+  }
+  
+  
+  h1, label, input, button {
+    display: block;
+    margin: 10px auto;
+  }
+  
+  h1 {
+    color: darkblue;
+  }
+  
+  input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 300px; 
+  }
+  
+  button {
+    background-color: darkblue; 
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #003366; 
+  }
+  
+  p {
+    margin-top: 20px;
+}
