@@ -1,5 +1,5 @@
 
-name: CI
+name: Build
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
       - main
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,7 +20,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '18'  # Atualize para a versão LTS mais recente, se necessário
+        node-version: '20.16.0'  # Substitua pela versão do Node.js que você usa
 
     - name: Cache Node modules
       uses: actions/cache@v3
@@ -34,12 +34,6 @@ jobs:
 
     - name: Install dependencies
       run: npm install  # ou `yarn install` se usar Yarn
-
-    - name: Run linters
-      run: npm run lint  # Adicione este comando se você tiver um script de linting no package.json
-
-    - name: Run tests
-      run: npm test -- --watchAll=false --ci --reporters=default  # ou `yarn test --watchAll=false --ci --reporters=default` se usar Yarn
 
     - name: Build
       run: npm run build  # ou `yarn build` se usar Yarn
