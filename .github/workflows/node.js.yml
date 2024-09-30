@@ -33,7 +33,7 @@ jobs:
           ${{ runner.os }}-node-
 
     - name: Notify Discord
-      uses: Ilshidur/action-discord@v2
+      uses: Ilshidur/action-discord@v1.0.0
       with:
           webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
           webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
