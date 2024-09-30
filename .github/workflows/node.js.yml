@@ -13,12 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send message to Discord
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@0.3.2
         with:
-          webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
-          webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
           message: "A new push has been made!"
-
   build:
     runs-on: ubuntu-latest
 
