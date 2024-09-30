@@ -1,4 +1,3 @@
-
 name: Build
 
 on:
@@ -10,43 +9,46 @@ on:
       - main
 
 jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send message to Discord
+        uses: Ilshidur/action-discord@0.3.2
+        with:
+          webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
+          webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
+          message: "A new push has been made!"
+
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '20.16.0'  # Substitua pela versão do Node.js que você usa
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.16.0'  # Replace with your Node.js version
 
-    - name: Cache Node modules
-      uses: actions/cache@v3
-      with:
-        path: |
-          ~/.npm
-          node_modules
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
+      - name: Cache Node modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.npm
+            node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-    - name: Notify Discord
-      uses: Ilshidur/action-discord@0.3.2
-      with:
-          webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
-          webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
-          message: "Action completed successfully!"
+      - name: Install dependencies
+        run: npm install  # or `yarn install` if using Yarn
 
-    - name: Install dependencies
-      run: npm install  # ou `yarn install` se usar Yarn
+      - name: Build
+        run: npm run build  # or `yarn build` if using Yarn
 
-    - name: Build
-      run: npm run build  # ou `yarn build` se usar Yarn
-
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: build
-        path: ./build  # Ajuste o caminho se necessário
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: ./build  # Adjust the path if necessary
